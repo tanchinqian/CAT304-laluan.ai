@@ -1,0 +1,35 @@
+# Local secrets and credentials
+.env
+.env.*
+!.env.example
+**/serviceAccount*.json
+**/*firebase*service*account*.json
+
+# User-provided PDFs, prototypes, diagrams, and other reference material
+/reference/
+
+# Local experiments and temporary artifacts
+/nlp_benchmark/
+/tmp/
+/CPT316-Assignment1-02-template.zip
+/handoff.md
+
+# JavaScript build output
+node_modules/
+**/node_modules/
+dist/
+**/dist/
+
+# Python environments and generated files
+.venv/
+**/.venv/
+__pycache__/
+**/__pycache__/
+*.py[cod]
+.pytest_cache/
+
+# Local IDE / OS files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
