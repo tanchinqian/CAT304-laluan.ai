@@ -11,6 +11,7 @@
 # Local experiments and temporary artifacts
 /nlp_benchmark/
 /tmp/
+/.local-data/
 /CPT316-Assignment1-02-template.zip
 /handoff.md
 

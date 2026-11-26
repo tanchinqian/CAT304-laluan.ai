@@ -1,0 +1,138 @@
+{
+  "notice": "Illustrative development catalogue. Replace with reviewed USM handbook/CLO data, occupational profiles and semester schedules before evaluation.",
+  "skills": [
+    { "id": "python", "name": "Python", "aliases": ["Python programming"] },
+    { "id": "sql", "name": "SQL", "aliases": ["Structured Query Language"] },
+    {
+      "id": "database",
+      "name": "Database design",
+      "aliases": ["relational modelling"]
+    },
+    { "id": "api", "name": "REST APIs", "aliases": ["RESTful services"] },
+    {
+      "id": "analysis",
+      "name": "Data analysis",
+      "aliases": ["data analytics"]
+    },
+    { "id": "ml", "name": "Machine learning", "aliases": ["ML"] }
+  ],
+  "careers": [
+    {
+      "id": "software",
+      "name": "Software developer (sample)",
+      "skills": ["python", "sql", "database", "api"]
+    },
+    {
+      "id": "data",
+      "name": "Data analyst (sample)",
+      "skills": ["python", "sql", "analysis", "ml"]
+    }
+  ],
+  "courses": [
+    {
+      "id": "DEMO101",
+      "name": "Programming foundations",
+      "description": "Sample programming course, not an official USM offering.",
+      "outcomes": ["Develop Python programs to solve computational problems."],
+      "skills": ["python"],
+      "prerequisites": [],
+      "source": "Illustrative fixture",
+      "offerings": [
+        {
+          "semester": "2026/27-1",
+          "group": "A",
+          "sessions": [{ "day": "Monday", "start": "09:00", "end": "11:00" }]
+        }
+      ]
+    },
+    {
+      "id": "DEMO201",
+      "name": "Relational databases",
+      "description": "Sample relational modelling and querying course.",
+      "outcomes": ["Design relational databases and query data using SQL."],
+      "skills": ["sql", "database"],
+      "prerequisites": ["DEMO101"],
+      "source": "Illustrative fixture",
+      "offerings": [
+        {
+          "semester": "2026/27-1",
+          "group": "A",
+          "sessions": [{ "day": "Tuesday", "start": "10:00", "end": "12:00" }]
+        },
+        {
+          "semester": "2026/27-1",
+          "group": "B",
+          "sessions": [{ "day": "Friday", "start": "14:00", "end": "16:00" }]
+        }
+      ]
+    },
+    {
+      "id": "DEMO202",
+      "name": "Web services",
+      "description": "Sample service development course.",
+      "outcomes": ["Implement and test REST APIs with Python."],
+      "skills": ["api", "python"],
+      "prerequisites": ["DEMO101"],
+      "source": "Illustrative fixture",
+      "offerings": [
+        {
+          "semester": "2026/27-1",
+          "group": "A",
+          "sessions": [{ "day": "Monday", "start": "10:00", "end": "12:00" }]
+        }
+      ]
+    },
+    {
+      "id": "DEMO301",
+      "name": "Applied data analysis",
+      "description": "Sample data analysis course.",
+      "outcomes": ["Use Python and SQL for data analysis."],
+      "skills": ["analysis", "python", "sql"],
+      "prerequisites": ["DEMO201"],
+      "source": "Illustrative fixture",
+      "offerings": []
+    },
+    {
+      "id": "DEMO302",
+      "name": "Machine learning foundations",
+      "description": "Sample predictive modelling course.",
+      "outcomes": ["Evaluate machine learning models using Python."],
+      "skills": ["ml", "python"],
+      "prerequisites": ["DEMO101"],
+      "source": "Illustrative fixture",
+      "offerings": []
+    }
+  ],
+  "resources": [
+    {
+      "id": "EXT-SQL",
+      "name": "SQL practice resource (sample)",
+      "description": "Illustrative mapping to a public SQL tutorial; not a certification.",
+      "provider": "PostgreSQL documentation",
+      "url": "https://www.postgresql.org/docs/current/tutorial.html",
+      "skills": ["sql", "database"],
+      "prerequisites": [],
+      "source": "Mapping is a development fixture"
+    },
+    {
+      "id": "EXT-API",
+      "name": "Web API resource (sample)",
+      "description": "Illustrative resource mapping for API learning.",
+      "provider": "MDN",
+      "url": "https://developer.mozilla.org/en-US/docs/Learn_web_development/Extensions/Server-side",
+      "skills": ["api"],
+      "prerequisites": [],
+      "source": "Mapping is a development fixture"
+    },
+    {
+      "id": "EXT-ML",
+      "name": "Machine learning resource (sample)",
+      "description": "Illustrative resource mapping for modelling practice.",
+      "provider": "scikit-learn",
+      "url": "https://scikit-learn.org/stable/tutorial/index.html",
+      "skills": ["ml", "analysis"],
+      "prerequisites": [],
+      "source": "Mapping is a development fixture"
+    }
+  ]
+}

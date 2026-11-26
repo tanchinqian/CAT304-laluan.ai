@@ -10,5 +10,10 @@ CREATE TABLE IF NOT EXISTS analysis_history (
 CREATE INDEX IF NOT EXISTS analysis_history_created_at_idx
   ON analysis_history (created_at DESC);
 
+CREATE TABLE IF NOT EXISTS student_state (
+  uid TEXT PRIMARY KEY,
+  state JSONB NOT NULL
+);
+
 CREATE INDEX IF NOT EXISTS analysis_history_firebase_uid_idx
   ON analysis_history (firebase_uid);

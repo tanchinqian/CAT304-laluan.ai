@@ -14,6 +14,7 @@ load_dotenv(Path(__file__).resolve().parents[2] / ".env")
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger("laluan.nlp")
 nlp = spacy.blank("en")
+nlp.add_pipe("sentencizer")
 model: SentenceTransformer | None = None
 model_name = os.getenv("SENTENCE_TRANSFORMER_MODEL", "sentence-transformers/all-MiniLM-L6-v2")
 embeddings_enabled = os.getenv("ENABLE_EMBEDDINGS", "true").lower() == "true"
@@ -37,6 +38,7 @@ app = FastAPI(title="Laluan NLP Service", version="0.1.0", lifespan=lifespan)
 class MatchRequest(BaseModel):
     outcomes: list[str] = Field(min_length=1, max_length=50)
     skills: list[str] = Field(min_length=1, max_length=100)
+    aliases: dict[str, list[str]] = Field(default_factory=dict)
 
 
 @app.get("/health")
@@ -51,19 +53,24 @@ def match(request: MatchRequest):
     if not valid_skills:
         return {"matches": [], "missing": [], "readinessScore": 0, "embeddingAvailable": model is not None}
 
-    patterns = [nlp.make_doc(skill) for skill in valid_skills]
-    matcher.add("SKILL", patterns)
+    labels = {}
+    for skill in valid_skills:
+        for term in [skill, *request.aliases.get(skill, [])]:
+            if term.strip():
+                labels[term.lower()] = skill
+    matcher.add("SKILL", [nlp.make_doc(term) for term in labels])
     found: dict[str, dict] = {}
-    for outcome in request.outcomes:
+    sentences = [s.text for outcome in request.outcomes for s in nlp(outcome).sents]
+    for outcome in sentences:
         doc = nlp(outcome)
         for _, start, end in matcher(doc):
             skill = doc[start:end].text.lower()
-            label = next((value for value in valid_skills if value.lower() == skill.lower()), None)
+            label = labels.get(skill.lower())
             if label:
-                found[label.lower()] = {"name": label, "score": 1.0, "method": "phrase"}
+                found[label.lower()] = {"name": label, "score": 1.0, "method": "phrase", "evidence": outcome}
 
     if model is not None:
-        outcome_vectors = model.encode(request.outcomes, convert_to_tensor=True, normalize_embeddings=True)
+        outcome_vectors = model.encode(sentences, convert_to_tensor=True, normalize_embeddings=True)
         skill_vectors = model.encode(valid_skills, convert_to_tensor=True, normalize_embeddings=True)
         similarities = util.cos_sim(outcome_vectors, skill_vectors)
         for index, skill in enumerate(valid_skills):
@@ -71,7 +78,8 @@ def match(request: MatchRequest):
                 continue
             score = float(similarities[:, index].max().item())
             if score >= similarity_threshold:
-                found[skill.lower()] = {"name": skill, "score": round(score, 4), "method": "embedding"}
+                sentence_index = int(similarities[:, index].argmax().item())
+                found[skill.lower()] = {"name": skill, "score": round(score, 4), "method": "embedding", "evidence": sentences[sentence_index]}
 
     matches = list(found.values())
     covered = set(found)
