@@ -1,5 +1,7 @@
 # Setup and integration guide
 
+For a first-time teammate installation, start with [the Windows team setup guide](team-setup.md). It covers the shared CAT304 project and the settings each developer must supply locally.
+
 ## Local development without credentials
 
 Install Node.js 24.12+ for compatibility with the Firebase dependency engines. From the root run `npm ci`, copy `.env.example` to `.env` only if no environment file already exists, then run `npm run dev`. Open http://localhost:5173. The API uses port 4000 and binds to loopback. Individual commands are `npm run dev:web` and `npm run dev:api`. Local build/domain/API checks on this workstation used Node 22.12; authenticated Firebase operation remains a setup gate and should be verified on the supported version.
@@ -47,11 +49,11 @@ Reference: https://firebase.google.com/docs/auth/admin/verify-id-tokens
 1. Create/select a project in Google AI Studio and create a Gemini API key. Enable billing/quota if required for your project.
 2. Set GEMINI_API_KEY only in the server .env or secret manager. Never paste it into chat or commit it.
 3. Set GEMINI_MODEL to a model identifier available to your project with structured JSON output support. A stale model name can return 404; the app does not assume a particular model is available.
-4. Restart the API. Save a profile with missing skills and choose Generate Learning Plan with Gemini.
+4. Restart the API. Save a profile with missing skills and choose **Generate learning plan**.
 5. The API sends eligible catalogue IDs, skills, prerequisites and selections, not personal identity details. It validates generated IDs, uniqueness, skill relevance and prerequisite order, with one bounded retry. Keys and raw provider responses are never logged.
 6. Failure preserves the previous valid plan, marks it as awaiting refresh and keeps newly calculated coverage. A retained plan from a previous role is labelled accordingly.
 
-Generate local preview is a separately labelled rule-based path and does not test Gemini. Saved generated plans live only in the ignored local store or database.
+**Preview without AI** is the separately labelled rule-based path and does not test Gemini. Saved generated plans live only in the ignored local store or database.
 
 Reference: https://ai.google.dev/gemini-api/docs/structured-output
 
@@ -70,4 +72,4 @@ services/api/src/catalogue.json contains illustrative records, not official USM 
 
 Run `npm test` and `npm run build:web`. Keep .env, service-account files, .local-data, model caches, reference/, nlp_benchmark/ and tmp/ out of Git. plan.md records scenario coverage and actual checks. Sample scores and clashes must not be reported as real USM or industry findings.
 
-With the API, NLP and frontend running, `npm run test:browser` exercises the fixture workflows in a fresh browser context. It requires Microsoft Edge by default. On other platforms run `npx playwright install chromium` and set `BROWSER_CHANNEL=chromium`. Set `BROWSER_TEST_URL` if the frontend uses a different address. Screenshots are saved under ignored `tmp/validation`. Set `API_TEST_URL` to the API address before `npm test` to include the HTTP integration test; otherwise it is explicitly skipped. Browser and HTTP tests create isolated sample records, not real student accounts.
+With a separate development-mode API (`AUTH_REQUIRED=false`), NLP and frontend running, `npm run test:browser` exercises fixture workflows in a fresh browser context. It requires Microsoft Edge by default. On other platforms run `npx playwright install chromium` and set `BROWSER_CHANNEL=chromium`. Set `BROWSER_TEST_URL` if the frontend uses a different address. Screenshots are saved under ignored `tmp/validation`. Set `API_TEST_URL` to the development API address before `npm test` to include the HTTP integration test; otherwise it is explicitly skipped. These tests do not automate real Firebase sign-in and must not be pointed at a shared production environment.

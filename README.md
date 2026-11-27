@@ -16,7 +16,7 @@ npm run dev
 
 Copy the environment example only on first setup. Open http://localhost:5173. Local development needs no keys and persists data in ignored .local-data files. Firebase and PostgreSQL are required for shared deployment. The separate NLP service supplies candidate evidence; accepted catalogue mappings determine coverage.
 
-See [setup instructions](docs/setup.md) for Python/model installation, Firebase, PostgreSQL, Gemini, catalogue preparation and hosting. See [use-case plan](plan.md) for the 18 flows and validation results.
+New teammate? Follow [the Windows team setup guide](docs/team-setup.md) for the complete installation checklist, shared Firebase settings, private credentials, local PostgreSQL, NLP and Gemini setup, startup and troubleshooting. See [integration details](docs/setup.md) for catalogue preparation and hosting, and [use-case plan](plan.md) for the 18 flows and validation results.
 
 The catalogue is illustrative, not reviewed USM/DOSM data. Supply the academic handbook/CLOs and current schedules before meaningful evaluation. The score measures recorded coverage, not proficiency.
 
