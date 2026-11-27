@@ -105,17 +105,11 @@ The schema and example data are in Git. The running database files, passwords an
 
 ### Web configuration — shared team values
 
-Ask the coordinator for the registered web app configuration from **Firebase Console → Project settings → General → Your apps**. Put the corresponding values in your `.env`:
+The team's Firebase web configuration is already filled in `.env.example`. Copying that template in step 4 supplies `VITE_FIREBASE_API_KEY`, `VITE_FIREBASE_AUTH_DOMAIN`, `VITE_FIREBASE_PROJECT_ID`, `VITE_FIREBASE_APP_ID` and `FIREBASE_PROJECT_ID` for `cat304-89545`. These identify the web app; they do not provide Admin SDK or Gemini access.
 
-```env
-VITE_FIREBASE_API_KEY=REPLACE_WITH_TEAM_WEB_API_KEY
-VITE_FIREBASE_AUTH_DOMAIN=REPLACE_WITH_TEAM_AUTH_DOMAIN
-VITE_FIREBASE_PROJECT_ID=cat304-89545
-VITE_FIREBASE_APP_ID=REPLACE_WITH_TEAM_WEB_APP_ID
-FIREBASE_PROJECT_ID=cat304-89545
-```
+If you already have a `.env`, copy only those shared settings from the updated template and preserve your own private paths and keys. The coordinator can verify the web values under **Firebase Console → Project settings → General → Your apps** and should restrict the Firebase web API key to its intended Firebase services. See [Firebase's explanation of web API keys](https://firebase.google.com/docs/projects/api-keys).
 
-Replace all `REPLACE_WITH_...` placeholders. These are the Firebase web app settings, not the Gemini key or Admin SDK private key. The Firebase API key should be restricted to the intended Firebase services.
+The template keeps `AUTH_REQUIRED=false` for the credential-free development workspace. Complete the server-credential steps below and set `AUTH_REQUIRED=true` to use Firebase sign-in; prefilling web settings alone does not enable protected backend access.
 
 The coordinator enables **Authentication → Sign-in method → Email/Password** once for the shared project. For local development, the coordinator adds `localhost` under **Authentication → Settings → Authorized domains** if missing. Each teammate can then register their own student account in the website.
 
